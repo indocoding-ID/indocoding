@@ -1,0 +1,51 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <script src="ds:/Sys/app.js"></script>
+    <script src="./tw.js"></script>
+    <script src="./theme.js"></script>
+    <script src="./ejs.js"></script>
+</head>
+	
+<script>
+    //Called after application is started.
+    if (!String.prototype.replaceAll) {
+      String.prototype.replaceAll = function (search, replacement) {
+        // Check if search is a string or RegExp
+        if (typeof search === 'string') {
+          return this.split(search).join(replacement);
+        } else if (search instanceof RegExp) {
+          // Ensure the global flag is set on the RegExp
+          if (!search.global) {
+            search = new RegExp(search.source, search.flags + 'g');
+          }
+          return this.replace(search, replacement);
+        } else {
+          throw new TypeError('First argument must be a string or RegExp');
+        }
+      };
+    }
+    
+    function OnStart()
+    {
+        app.ShowPopup( "HTML Rocks!" );
+        app.EnableBackKey( false );
+    }
+    function OnBack()
+    {
+        var yesNo = app.CreateYesNoDialog( "Exit App?" );
+        yesNo.SetOnTouch( yesNo_OnTouch );
+        yesNo.Show();
+    }
+    
+    function yesNo_OnTouch( result )
+    {
+        if( result=="Yes" ) app.Exit();
+    }
+</script>
+
+<body class="bg-white" onload="app.Start()">
+	<div id="app"> Hello World! </div>
+	<script type="module" src="./index.js"></script>
+</body>
+</html>
